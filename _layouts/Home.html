@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+	{% include _head.html %}	
+</head>
+
+<body>
+
+	<aside class="sidebar">
+		<header>
+			<div class="about">
+				<div class="cover-author-image">
+					<a href="{{site.baseurl}}/">
+						<img src="{{site.baseurl}}/assets/img/{% if site.author-img %}{{site.author-img}}{% endif %}" alt="{{site.author}}">
+					</a>
+				</div>
+				<div class="author-name">
+					{{site.author}}
+				</div>
+				<p>{{site.about-author}}</p>
+			</div>
+		</header> <!-- End Header -->
+		<footer>
+			{% include _footer.html %}
+		</footer>
+	</aside> <!-- End Sidebar -->
+
+	<div class="content-box clearfix">
+		<div id="index" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
+			<h3>Articles</h3>
+			{% for post in site.posts limit:5 %}
+				<article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+				<h2 itemprop="headline">
+					<a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}
+					</a>
+				</h2>
+				<p itemprop="text">
+					{% if post.description %}
+						{{ post.description }}
+					{% else %}
+						{{ post.content | strip_html | strip_newlines | truncate: 120 }}
+					{% endif %}
+				</p>
+			</article>
+			{% endfor %}
+			<p><a href="{{ site.url}}/blog/">More...</a></p>
+		</div>
+	</div>
+
+</body>
+</html>
