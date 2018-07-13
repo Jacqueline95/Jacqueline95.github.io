@@ -1,3 +1,4 @@
 ---
 layout: Home
+tags: [blog]
 ---

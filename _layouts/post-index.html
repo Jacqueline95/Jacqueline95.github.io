@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+	{% include _head.html %}	
+</head>
+
+<body>
+
+	<aside class="sidebar">
+		<header>
+			<div class="about">
+				<div class="cover-author-image">
+					<a href="{{site.baseurl}}/">
+						<img src="{{site.baseurl}}/assets/img/{% if site.author-img %}{{site.author-img}}{% endif %}" alt="{{site.author}}">
+					</a>
+				</div>
+				<div class="author-name">
+					{{site.author}}
+				</div>
+				<p>{{site.about-author}}</p>
+			</div>
+		</header> <!-- End Header -->
+		<footer>
+			{% include _footer.html %}
+		</footer>
+	</aside> <!-- End Sidebar -->
+
+	<div class="wrapper">
+		<div class="content-box clearfix">
+			<h2>{{ page.title }}</h2>
+
+			{% for post in site.posts %}
+				{% unless post.next %}
+
+					<h3>{{ post.date | date: '%Y' }}</h3>
+
+				{% else %}
+
+					{% capture year %}
+						{{ post.date | date: '%Y' }}
+					{% endcapture %}
+
+					{% capture nyear %}
+						{{ post.next.date | date: '%Y' }}
+					{% endcapture %}
+
+					{% if year != nyear %}
+						<h3>{{ post.date | date: '%Y' }}</h3>
+					{% endif %}
+
+				{% endunless %}
+
+				<article class="post">
+					<div class="post-content">
+						<h1 class="post-title">
+							<a href="{{post.url | prepend: site.baseurl}}">{{ post.title }}</a>
+						</h1>
+						<p>{{ post.content | strip_html | truncate: 120 }}</p>
+					</div>
+				</article>
+			{% endfor %}
+		</div>
+	</div>
+
+</body>
+</html>

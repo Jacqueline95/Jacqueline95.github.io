@@ -27,25 +27,38 @@
 		</footer>
 	</aside> <!-- End Sidebar -->
 
-	<div class="content-box clearfix">
-		<div id="index" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
-			<h3>Articles</h3>
+	<div class="wrapper">
+		<div class="content-box clearfix">
+			<h3>ARTÍCULOS</h3>
+
 			{% for post in site.posts limit:5 %}
-				<article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-				<h2 itemprop="headline">
-					<a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}
-					</a>
-				</h2>
-				<p itemprop="text">
-					{% if post.description %}
-						{{ post.description }}
-					{% else %}
-						{{ post.content | strip_html | strip_newlines | truncate: 120 }}
-					{% endif %}
-				</p>
-			</article>
+				<article class="post">
+					{% if post.img %}
+						<a class="post-thumbnail" style="background-image: url({{'/assets/img/' | prepend: site.baseurl | append : post.img}})" href="{{post.url | prepend: site.baseurl}}"></a>
+  					{% endif %}
+					<div class="post-content">
+					    <h2 class="post-title">
+					    	<a href="{{post.url | prepend: site.baseurl}}">{{post.title}}</a>
+					    </h2>
+
+					    <p>{{ post.content | strip_html | truncate: 120 }}</p>
+
+					    <span class="post-date">{{post.date | date: '%Y, %b %d'}}&nbsp;&nbsp;&nbsp;—&nbsp;</span>
+
+					    <span class="post-words">
+					    	{% capture words %}
+					    		{{ post.content | number_of_words }}
+					    	{% endcapture %}
+
+					    	{% unless words contains "-" %}
+					    		{{ words | plus: 250 | divided_by: 250 | append: " minute read" }}
+					    	{% endunless %}
+					    </span>
+				  	</div>
+				</article>
 			{% endfor %}
-			<p><a href="{{ site.url}}/blog/">More...</a></p>
+
+			<p><a href="{{site.url}}/blog/">Más...</a></p>
 		</div>
 	</div>
 
